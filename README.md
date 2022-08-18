@@ -41,7 +41,7 @@ The meterID corresponding to the Part number is `4e763e64-5ae4-5ed3-8892-902bb82
 
 ## Corresponding retail query
 
-https://prices.azure.com/api/retail/prices?$filter=meterId%20eq%20'4e763e64-5ae4-5ed3-8892-902bb82ca7d3'%20and%20priceType%20eq%20'Consumption'
+[https://prices.azure.com/api/retail/prices?$filter=meterId%20eq%20'4e763e64-5ae4-5ed3-8892-902bb82ca7d3'%20and%20priceType%20eq%20'Consumption'](https://prices.azure.com/api/retail/prices?$filter=meterId%20eq%20'4e763e64-5ae4-5ed3-8892-902bb82ca7d3'%20and%20priceType%20eq%20'Consumption')
 
 Output:
 ```json
@@ -168,7 +168,7 @@ Filtered output:
 
 ## Corresponding retail query
 
-https://prices.azure.com/api/retail/prices?$filter=(meterId%20eq%20'82a17126-c674-4838-bfd8-b180068ab695'%20or%20meterId%20eq%20'71e1db1c-32f2-4a36-98b3-79682ea69ace')%20and%20priceType%20eq%20'Consumption'
+[https://prices.azure.com/api/retail/prices?$filter=(meterId%20eq%20'82a17126-c674-4838-bfd8-b180068ab695'%20or%20meterId%20eq%20'71e1db1c-32f2-4a36-98b3-79682ea69ace')%20and%20priceType%20eq%20'Consumption'](https://prices.azure.com/api/retail/prices?$filter=(meterId%20eq%20'82a17126-c674-4838-bfd8-b180068ab695'%20or%20meterId%20eq%20'71e1db1c-32f2-4a36-98b3-79682ea69ace')%20and%20priceType%20eq%20'Consumption')
 
 Output:
 ```json
