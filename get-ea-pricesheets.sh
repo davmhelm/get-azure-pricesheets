@@ -32,7 +32,7 @@ else
     
 	nextRestCall=$( cat $outFile | jq -r '.properties.nextLink // ""' )
     
-    while [ -n "$nextRestCall" ]; do
+    while [ ! -z "$nextRestCall" ]; do
     	((i++))
         printf -v index "%04d" $i
         outFile=${prefix}_${1}_${2}_${index}.json
