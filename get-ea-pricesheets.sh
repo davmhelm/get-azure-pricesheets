@@ -30,14 +30,14 @@ else
 	echo -e "Getting price sheet $outFile..."
     az rest --method get --uri "$nextRestCall" > $outFile
     
-	nextRestCall=$( cat $outFile | jq -r '.properties.nextLink' )
+	nextRestCall=$( cat $outFile | jq -r '.properties.nextLink // ""' )
     
-    while [ ! -z "$nextRestCall" ]; do
+    while [ -n "$nextRestCall" ]; do
     	((i++))
         printf -v index "%04d" $i
         outFile=${prefix}_${1}_${2}_${index}.json
         echo -e "Getting price sheet $outFile..."
     	az rest --method get --uri "$nextRestCall" > $outFile
-    	nextRestCall=$( cat $outFile | jq -r '.properties.nextLink' )
+    	nextRestCall=$( cat $outFile | jq -r '.properties.nextLink // ""' )
     done
 fi
