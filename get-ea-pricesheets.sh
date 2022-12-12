@@ -25,7 +25,7 @@ else
     if [ ! -z "$3" ]; then
         prefix=$3
     fi
-    outFile=$prefix_$1_$2_$index.json
+    outFile=${prefix}_${1}_${2}_${index}.json
 
 	echo -e "Getting price sheet $outFile..."
     az rest --method get --uri "$nextRestCall" > $outFile
@@ -35,7 +35,7 @@ else
     while [ ! -z "$nextRestCall" ]; do
     	((i++))
         printf -v index "%04d" $i
-        outFile=$prefix_$1_$2_$index.json
+        outFile=${prefix}_${1}_${2}_${index}.json
         echo -e "Getting price sheet $outFile..."
     	az rest --method get --uri "$nextRestCall" > $outFile
     	nextRestCall=$( cat $outFile | jq -r '.properties.nextLink' )
