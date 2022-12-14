@@ -15,7 +15,7 @@ else
     i=0
     printf -v index "%04d" $i
     nextRestCall="https://prices.azure.com/api/retail/prices?api-version=2021-10-01-preview"
-
+    
     prefix=retailpricesheet
     timestamp=$(date +"%Y%m%d%H%M%S%z")
     if [ ! -z "$1" ]; then
@@ -23,17 +23,15 @@ else
     fi
     outFile=${prefix}_${timestamp}_${index}.json
     
-    echo -e "Getting price sheet $outFile..."
-    curl --no-progress-meter --get "$nextRestCall" -o $outFile
-    
-    nextRestCall=$( cat $outFile | jq -r '.NextPageLink // ""' )
-    
     while [ ! -z "$nextRestCall" ]; do
+        # Retrieve pricesheet records
+        echo -e "Getting price sheet $outFile..."
+        curl --no-progress-meter --get "$nextRestCall" | jq > $outFile
+        
+        ## Prepare for next API call
+        nextRestCall=$( cat $outFile | jq -r '.NextPageLink // ""' )
         ((i++))
         printf -v index "%04d" $i
         outFile=${prefix}_${timestamp}_${index}.json
-        echo -e "Getting price sheet $outFile..."
-        curl --no-progress-meter --get "$nextRestCall" -o $outFile
-        nextRestCall=$( cat $outFile | jq -r '.NextPageLink // ""' )
     done
 fi
