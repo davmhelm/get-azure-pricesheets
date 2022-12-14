@@ -1,10 +1,10 @@
 #!/bin/bash
 
 if [[ $(echo $@ | grep -F -e '-h' -e '--help') ]]; then
-	echo -e "This command retrieves the currently available azure retail price sheets at the time of execution."
+    echo -e "This command retrieves the currently available azure retail price sheets at the time of execution."
     echo -e ""
     echo -e "usage: $0 optional-output-file-name-prefix"
-	echo -e "example: $0 mysheet"
+    echo -e "example: $0 mysheet"
     echo -e ""
     echo -e "Price sheets are downloaded in chunks from the public retail price API, and saved in numbered JSON files."
     echo -e "The file name format is: prefix_timestamp_####.json"
@@ -12,7 +12,7 @@ if [[ $(echo $@ | grep -F -e '-h' -e '--help') ]]; then
     echo -e "Timestamp is represented in yyyymmddHHMMSSz format (for example, $(date +"%Y%m%d%H%M%S%z"))"
     echo -e ""
 else
-	i=0
+    i=0
     printf -v index "%04d" $i
     nextRestCall="https://prices.azure.com/api/retail/prices?api-version=2021-10-01-preview"
 
@@ -22,18 +22,18 @@ else
         prefix=$1
     fi
     outFile=${prefix}_${timestamp}_${index}.json
-
-	echo -e "Getting price sheet $outFile..."
-    echo -e "curl --no-progress-meter --get "$nextRestCall" -o $outFile"
     
-	nextRestCall=$( cat $outFile | jq -r '.NextPageLink // ""' )
+    echo -e "Getting price sheet $outFile..."
+    curl --no-progress-meter --get "$nextRestCall" -o $outFile
+    
+    nextRestCall=$( cat $outFile | jq -r '.NextPageLink // ""' )
     
     while [ ! -z "$nextRestCall" ]; do
-    	((i++))
+        ((i++))
         printf -v index "%04d" $i
         outFile=${prefix}_${timestamp}_${index}.json
         echo -e "Getting price sheet $outFile..."
-    	curl --no-progress-meter --get "$nextRestCall" -o $outFile
-    	nextRestCall=$( cat $outFile | jq -r '.NextPageLink // ""' )
+        curl --no-progress-meter --get "$nextRestCall" -o $outFile
+        nextRestCall=$( cat $outFile | jq -r '.NextPageLink // ""' )
     done
 fi
